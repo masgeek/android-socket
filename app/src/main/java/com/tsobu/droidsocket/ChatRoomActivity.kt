@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.google.gson.Gson
+import com.tsobu.droidsocket.databinding.ActivityChatRoomBinding
 import com.tsobu.droidsocket.model.InitialData
 import com.tsobu.droidsocket.model.MessageType
 import com.tsobu.droidsocket.model.RequestMessage
@@ -12,10 +13,12 @@ import com.tsobu.droidsocket.model.SendMessage
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import kotlinx.android.synthetic.main.activity_chat_room.*
 
 class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
 
     val TAG = ChatRoomActivity::class.java.simpleName
+
 
     lateinit var mSocket: Socket;
     lateinit var userName: String;
@@ -29,39 +32,46 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat_room)
-//        send.setOnClickListener(this)
-//        leave.setOnClickListener(this)
+        val binding = ActivityChatRoomBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        val send = binding.send
+        val leave = binding.leave
+
+        send.setOnClickListener(this)
+        leave.setOnClickListener(this)
 
         chatRoomAdapter = ChatRoomAdapter(this, chatList);
-//        recyclerView.adapter = chatRoomAdapter;
+        recyclerView.adapter = chatRoomAdapter;
 
+        userName = "masgeek"
+        roomName = "driverRequest"
         try {
-            mSocket = IO.socket("http://10.0.2.2:3000")
-            Log.d("success", mSocket.id())
-
+            mSocket = IO.socket("https://072e057d10e9.ngrok.io")
+            if (mSocket.id() != null) {
+                Log.d("success", mSocket.id())
+            }
+            mSocket.connect()
+            mSocket.on(Socket.EVENT_CONNECT, onConnect)
+            mSocket.on("newUserToChatRoom", onNewUser)
+            mSocket.on("updateChat", onUpdateChat)
+            mSocket.on("userLeftChatRoom", onUserLeft)
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("fail", "Failed to connect", e)
+            Log.d("fail", "Failed to connect", e)
         }
-
-        mSocket.connect()
-        mSocket.on(Socket.EVENT_CONNECT, onConnect)
-        mSocket.on("newUserToChatRoom", onNewUser)
-        mSocket.on("updateChat", onUpdateChat)
-        mSocket.on("userLeftChatRoom", onUserLeft)
     }
 
     var onUserLeft = Emitter.Listener {
         val leftUserName = it[0] as String
         val chat = RequestMessage(leftUserName, "", "", MessageType.USER_LEAVE.index)
-//        addItemToRecyclerView(chat)
+        addItemToRecyclerView(chat)
     }
 
     var onUpdateChat = Emitter.Listener {
         val chat = gson.fromJson(it[0].toString(), RequestMessage::class.java)
         chat.viewType = MessageType.CHAT_PARTNER.index
-//        addItemToRecyclerView(chat)
+        addItemToRecyclerView(chat)
     }
 
     var onConnect = Emitter.Listener {
@@ -74,29 +84,29 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
     var onNewUser = Emitter.Listener {
         val name = it[0] as String //This pass the userName!
         val chat = RequestMessage(name, "", roomName, MessageType.USER_JOIN.index)
-//        addItemToRecyclerView(chat)
+        addItemToRecyclerView(chat)
         Log.d(TAG, "on New User triggered.")
     }
 
     private fun sendMessage() {
-        val content = "Content was here" //editText.text.toString()
+        val content = editText.text.toString()
         val sendData = SendMessage(userName, content, roomName)
         val jsonData = gson.toJson(sendData)
         mSocket.emit("newMessage", jsonData)
 
         val message = RequestMessage(userName, content, roomName, MessageType.CHAT_MINE.index)
-//        addItemToRecyclerView(message)
+        addItemToRecyclerView(message)
     }
 
-    private fun addItemToRecyclerView(message: RequestMessage) {
+    private fun addItemToRecyclerView(requestMessage: RequestMessage) {
 
         //Since this function is inside of the listener,
         // You need to do it on UIThread!
         runOnUiThread {
-            chatList.add(message)
+            chatList.add(requestMessage)
             chatRoomAdapter.notifyItemInserted(chatList.size)
-//            editText.setText("")
-//            recyclerView.scrollToPosition(chatList.size - 1) //move focus on last message
+            editText.setText("")
+            recyclerView.scrollToPosition(chatList.size - 1) //move focus on last message
         }
     }
 

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_chat_room.*
 
 class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
 
-    val TAG = ChatRoomActivity::class.java.simpleName
+    val tag = ChatRoomActivity::class.java.simpleName
 
 
     lateinit var mSocket: Socket;
@@ -47,7 +47,7 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         userName = "masgeek"
         roomName = "driverRequest"
         try {
-            mSocket = IO.socket("https://072e057d10e9.ngrok.io")
+            mSocket = IO.socket("https://e6b8f1d9c4ce.ngrok.io")
             if (mSocket.id() != null) {
                 Log.d("success", mSocket.id())
             }
@@ -85,7 +85,7 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         val name = it[0] as String //This pass the userName!
         val chat = RequestMessage(name, "", roomName, MessageType.USER_JOIN.index)
         addItemToRecyclerView(chat)
-        Log.d(TAG, "on New User triggered.")
+        Log.d(tag, "on New User triggered.")
     }
 
     private fun sendMessage() {

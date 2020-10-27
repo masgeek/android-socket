@@ -78,7 +78,6 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         val data = InitialData(userName, roomName)
         val jsonData = gson.toJson(data)
         mSocket.emit("subscribe", jsonData)
-
     }
 
     var onNewUser = Emitter.Listener {

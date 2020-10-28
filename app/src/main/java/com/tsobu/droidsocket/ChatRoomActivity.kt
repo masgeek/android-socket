@@ -44,16 +44,16 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         chatRoomAdapter = ChatRoomAdapter(this, chatList);
         recyclerView.adapter = chatRoomAdapter;
 
-        userName = "masgeek"
-        roomName = "driverRequest"
+        userName = "barsamms@gmail.com"
+        roomName = "104"
         try {
-            mSocket = IO.socket("https://e6b8f1d9c4ce.ngrok.io")
+            mSocket = IO.socket("https://ac0791203c73.ngrok.io")
             if (mSocket.id() != null) {
                 Log.d("success", mSocket.id())
             }
             mSocket.connect()
             mSocket.on(Socket.EVENT_CONNECT, onConnect)
-            mSocket.on("newUserToChatRoom", onNewUser)
+            mSocket.on("driverMatchedResp", onDriverMatched)
             mSocket.on("updateChat", onUpdateChat)
             mSocket.on("userLeftChatRoom", onUserLeft)
         } catch (e: Exception) {
@@ -80,10 +80,10 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         mSocket.emit("subscribe", jsonData)
     }
 
-    var onNewUser = Emitter.Listener {
-        val name = it[0] as String //This pass the userName!
-        val chat = RequestMessage(name, "", roomName, MessageType.USER_JOIN.index)
-        addItemToRecyclerView(chat)
+    var onDriverMatched = Emitter.Listener { socketData ->
+        val name = socketData
+//        val chat = RequestMessage(name, "", roomName, MessageType.USER_JOIN.index)
+//        addItemToRecyclerView(chat)
         Log.d(tag, "on New User triggered.")
     }
 

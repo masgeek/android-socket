@@ -47,7 +47,7 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         userName = "barsamms@gmail.com"
         roomName = "104"
         try {
-            mSocket = IO.socket("https://ac0791203c73.ngrok.io")
+            mSocket = IO.socket("https://6ed6e27d5bc4.ngrok.io")
             if (mSocket.id() != null) {
                 Log.d("success", mSocket.id())
             }

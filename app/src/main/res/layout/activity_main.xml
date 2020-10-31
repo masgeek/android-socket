@@ -5,46 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messages"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical" />
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/rideRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin">
+        android:text="Driver ride status"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-        <EditText
-            android:id="@+id/message_input"
-            android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/driverLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/driverAcceptRide"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/prompt_message"
-            android:imeActionLabel="@string/action_send"
-            android:imeOptions="actionSend"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:enabled="false"
+            android:text="Accept Ride" />
 
-        <ImageButton
-            android:id="@+id/send_button"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/driverRejectRide"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/action_send"
-            android:onClick="onClick"
-            android:src="@android:drawable/ic_menu_send" />
+            android:enabled="false"
+            android:text="Reject Ride" />
 
+        <Button
+            android:id="@+id/driverStartTrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Start Trip" />
+
+        <Button
+            android:id="@+id/driverEndTrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="End Trip" />
+
+        <Button
+            android:id="@+id/driverCancelRide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Cancel Ride" />
+
+        <Button
+            android:id="@+id/riderCancelRide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:enabled="false"
+            android:text="Rider Cancel Ride" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/rideStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/green" />
 
 </LinearLayout>

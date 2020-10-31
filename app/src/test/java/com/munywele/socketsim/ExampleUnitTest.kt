@@ -1,4 +1,4 @@
-package com.tsobu.droidsocket
+package com.munywele.socketsim
 
 import org.junit.Test
 

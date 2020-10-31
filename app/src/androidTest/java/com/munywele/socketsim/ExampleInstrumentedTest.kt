@@ -1,4 +1,4 @@
-package com.tsobu.droidsocket
+package com.munywele.socketsim
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.tsobu.droidsocket", appContext.packageName)
+        assertEquals("com.munywele.socketsim", appContext.packageName)
     }
 }

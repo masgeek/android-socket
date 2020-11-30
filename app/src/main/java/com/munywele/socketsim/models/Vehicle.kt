@@ -1,13 +1,15 @@
 package com.munywele.socketsim.models
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+
 
 class Vehicle {
     @SerializedName("id")
     var id: Long? = null
 
     @SerializedName("driverId")
-    var driverId: Long? = null
+    var driverId: String? = null
 
     @SerializedName("regNo")
     var regNo: String? = null
@@ -22,7 +24,7 @@ class Vehicle {
     var vehicleColor: String? = null
 
     @SerializedName("vehicleCapacity")
-    var vehicleCapacity: Int? = null
+    var vehicleCapacity: Long? = null
 
     @SerializedName("vehicleType")
     var vehicleType: String? = null

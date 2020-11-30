@@ -2,15 +2,16 @@ package com.munywele.socketsim
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.munywele.socketsim.databinding.ActivityMainBinding
-import com.munywele.socketsim.models.TripRequest
+import com.munywele.socketsim.enums.EnumRequestType
+import com.munywele.socketsim.enums.EnumTripStatus
 import com.munywele.socketsim.models.Rider
 import com.munywele.socketsim.models.SocketError
+import com.munywele.socketsim.models.Trip
+import com.munywele.socketsim.models.TripRequest
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 //        rideRequest = binding.rideRequest
 //        rideStatus = binding.rideStatus
 
+        tripRequest = TripRequest("1", "", EnumRequestType.ACCEPT_RIDE,  Trip())
         driverAcceptRide.setOnClickListener {
             updateTripStatus(EnumTripStatus.ACCEPTED)
         }
@@ -58,7 +60,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            mSocket = IO.socket("https://6ed6e27d5bc4.ngrok.io")
+            val options = IO.Options()
+//            mSocket = IO.socket("http://dev.api.garihub.com/api/socket-service/",options)
+//            mSocket = IO.socket("http://dev.api.garihub.com/socket.io"
+            mSocket = IO.socket("https://5bb537988dc9.ngrok.io")
             if (mSocket.id() != null) {
                 Log.d("success", mSocket.id())
             }
@@ -84,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         val jsonData = socketData[0] as String
         tripRequest = gson.fromJson(jsonData, TripRequest::class.java)
         updateRiderRequest(tripRequest)
-        updateRideStatus(tripRequest)
     }
     var onRideUpdated = Emitter.Listener { socketData ->
         val jsonData = socketData[0] as String
@@ -108,17 +112,13 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             if (tripRequest != null) {
                 val info = StringBuilder()
-                        .append("Ride request from ")
-                        .append(tripRequest.rider?.firstName)
-                        .append(" ")
-                        .append(tripRequest.rider?.lastName)
-                        .append("\nFrom ")
-                        .append(tripRequest.trip.pickupAddress)
-                        .append(" To ")
-                        .append(tripRequest.trip.dropOffAddress)
-                        .append("\n Rating ")
-                        .append(tripRequest.rider?.rating)
-                        .toString()
+                    .append("Ride request from ")
+                    .append(tripRequest.trip.riderId)
+                    .append("\nFrom ")
+                    .append(tripRequest.trip.pickupAddress)
+                    .append(" To ")
+                    .append(tripRequest.trip.dropOffAddress)
+                    .toString()
                 rideRequest.text = info
 
 
@@ -128,13 +128,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun updateRideStatus(tripRequest: TripRequest?) {
         runOnUiThread {
             if (tripRequest != null) {
                 val info = StringBuilder()
-                        .append(tripRequest.trip.tripStatus)
-                        .toString()
+                    .append(tripRequest.trip.tripStatus)
+                    .toString()
                 rideStatus.text = info
                 toggleState(tripRequest.trip.tripStatus!!)
             }

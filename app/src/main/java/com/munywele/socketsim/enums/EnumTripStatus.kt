@@ -1,4 +1,4 @@
-package com.munywele.socketsim
+package com.munywele.socketsim.enums
 
 
 enum class EnumTripStatus {

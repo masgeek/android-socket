@@ -1,17 +1,19 @@
 package com.munywele.socketsim.models
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.munywele.socketsim.EnumTripStatus
+import com.munywele.socketsim.enums.EnumTripStatus
+
 
 class Trip {
     @SerializedName("id")
     var id: Long? = null
 
     @SerializedName("driverId")
-    var driverId: Long? = null
+    var driverId: String? = null
 
     @SerializedName("riderId")
-    var riderId: Long? = null
+    var riderId: String? = null
 
     @SerializedName("vehicleId")
     var vehicleId: Long? = null
@@ -41,7 +43,7 @@ class Trip {
     var tripDistance: Double? = null
 
     @SerializedName("tripDuration")
-    var tripDuration: Int? = null
+    var tripDuration: Long? = null
 
     @SerializedName("currency")
     var currency: String? = null
@@ -49,6 +51,15 @@ class Trip {
     @SerializedName("paymentMode")
     var paymentMode: String? = null
 
+    @SerializedName("tripCost")
+    var tripCost: Long? = null
+
     @SerializedName("tripStatus")
     var tripStatus: EnumTripStatus? = null
+
+    @SerializedName("createdAt")
+    var createdAt: String? = null
+
+    @SerializedName("updatedAt")
+    var updatedAt: String? = null
 }

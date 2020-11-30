@@ -1,11 +1,10 @@
 package com.munywele.socketsim.models
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Driver {
-    @SerializedName("id")
-    var id: Long? = null
 
+class Driver {
     @SerializedName("firstName")
     var firstName: String? = null
 
@@ -29,4 +28,13 @@ class Driver {
 
     @SerializedName("onDuty")
     var onDuty: Boolean? = null
+
+    @SerializedName("identifier")
+    var identifier: String? = null
+
+    @SerializedName("rating")
+    var rating: Double? = null
+
+    @SerializedName("fcmToken")
+    var fcmToken: String? = null
 }

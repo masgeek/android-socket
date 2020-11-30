@@ -64,6 +64,14 @@
             android:layout_marginTop="40px"
             android:enabled="false"
             android:text="Rider Cancel Ride" />
+
+        <Button
+            android:id="@+id/reconnect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:enabled="true"
+            android:text="Reconnect" />
     </LinearLayout>
 
     <TextView

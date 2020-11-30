@@ -1,16 +1,19 @@
 package com.munywele.socketsim.models
 
 import com.google.gson.annotations.SerializedName
+import com.munywele.socketsim.enums.EnumRequestType
 
 data class TripRequest(
-    @SerializedName("riderId")
-    var riderId: String,
-    @SerializedName("rider")
-    var rider: Rider? = null,
+    @SerializedName("to")
+    var to: String,
+    @SerializedName("from")
+    var from: String,
+    @SerializedName("requestType")
+    var requestType: EnumRequestType,
+    @SerializedName("trip")
+    var trip: Trip,
     @SerializedName("vehicle")
     var vehicle: Vehicle? = null,
     @SerializedName("driver")
     var driver: Driver? = null,
-    @SerializedName("trip")
-    var trip: Trip,
 )

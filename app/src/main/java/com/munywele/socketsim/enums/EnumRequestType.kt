@@ -4,6 +4,7 @@ enum class EnumRequestType {
     RIDE_REQUEST,
     DRIVER_ONLINE,
     DRIVER_OFFLINE,
+    DRIVER_ARRIVED,
     ACCEPT_RIDE,
     REJECT_RIDE,
     END_TRIP,

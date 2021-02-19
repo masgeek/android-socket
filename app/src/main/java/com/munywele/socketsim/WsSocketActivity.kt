@@ -1,4 +1,3 @@
-git add
 package com.munywele.socketsim
 
 import android.os.Bundle
@@ -20,12 +19,9 @@ import java.util.concurrent.Executors
 class WsSocketActivity : AppCompatActivity() {
 
     private val userId: String = "26f911a266a573400aca54f90314ce4a"
-    private val email = "barsamms@gmail.com"
-    private val phone = "254713196504"
-    private val socketRoom = "RIDER-100"
 
-    //    private val socketUrl = "ws://dev.garihub.com/api/socket-service"
-    private val socketUrl = "ws://40ba1400781a.ngrok.io"
+        private val socketUrl = "ws://dev.garihub.com/api/socket-service"
+//    private val socketUrl = "ws://40ba1400781a.ngrok.io"
     private lateinit var ws: WebSocket
     private lateinit var tripRequest: TripRequest
     private val gson: Gson = Gson()
@@ -56,7 +52,7 @@ class WsSocketActivity : AppCompatActivity() {
         try {
             val factory = WebSocketFactory()
             ws = factory.createSocket(socketUrl)
-            ws.addHeader("client-id", userId)
+//            ws.addHeader("client-id", userId)
             ws.addListener(object : WebSocketAdapter() {
                 @Throws(Exception::class)
                 override fun onTextMessage(websocket: WebSocket, jsonData: String) {
